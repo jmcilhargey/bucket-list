@@ -1,0 +1,7 @@
+/node_modules
+/env.js
+*.log
+*.pid
+*.seed
+*.gz
+*.dat
