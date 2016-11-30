@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #212121;
+  letter-spacing: 0.05em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* App View */
+
+.main-container {
+  display: flex;
+  display: -webkit-flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-body {
+  display: flex;
+  display: -webkit-flex;
+  flex: 1;
+  -webkit-flex: 1;
+  background-color: #eeeeee;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-container {
+  display: flex;
+  display: -webkit-flex;
+  padding: 1.5em;
+  border-bottom: 1px solid #e0e0e0;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.header-title {
+  flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+}
+
+.header-selection {
+  flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+}
+
+.header-selection > a {
+  border-right: 1px solid #e0e0e0;
+  padding: 0 1em;
+}
+
+.header-selection a:first-child {
+  border-left: 1px solid #e0e0e0;
+}
+
+.footer-container {
+  padding: 0.25em 0;
+  margin: 0 auto;
+}
+
+/* Home View */
+
+.home-container {
+  max-width: 68em;
+  margin: 0 auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+
+.pin-card {
+  padding: 0 1em;
+  margin: 0 1em 1em 0;
+  min-width: 20em;
+  max-width: 20em;
+  flex: 1;
+  -webkit-flex: 1;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  background-color: white;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+}
+
+.pin-card > img {
+  max-width: 100%;
+}
+
+.pin-details {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+}
+
+.pin-details > p {
+  margin: 1em auto;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0%;
+  bottom: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.75;
+  z-index: 10;
+}
