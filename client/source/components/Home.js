@@ -1,6 +1,8 @@
 "use strict";
 
 import React from "react";
+import like from "../images/like.svg";
+import view from "../images/view.svg";
 
 class Home extends React.Component {
   render() {
@@ -45,8 +47,8 @@ class Home extends React.Component {
           <div className="pin-details">
             <p>{ pin.user }</p>
             <p>{ pin.time }</p>
-            <p>{ pin.views }</p>
-            <p>{ pin.likes }</p>
+            <p><span dangerouslySetInnerHTML={{ __html: view }}></span>{ pin.views }</p>
+            <p><span dangerouslySetInnerHTML={{ __html: like }}></span>{ pin.likes }</p>
           </div>
         </div>
       );
