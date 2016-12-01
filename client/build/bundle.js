@@ -58,7 +58,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	__webpack_require__(235);
+	__webpack_require__(236);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26356,19 +26356,19 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _home = __webpack_require__(231);
+	var _home = __webpack_require__(232);
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _register = __webpack_require__(232);
+	var _register = __webpack_require__(233);
 
 	var _register2 = _interopRequireDefault(_register);
 
-	var _login = __webpack_require__(233);
+	var _login = __webpack_require__(234);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _settings = __webpack_require__(234);
+	var _settings = __webpack_require__(235);
 
 	var _settings2 = _interopRequireDefault(_settings);
 
@@ -26378,9 +26378,8 @@
 	  _reactRouter.Route,
 	  { path: "/", component: _app2.default },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: "/signup", component: _register2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: "/login", component: _login2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: "/settings", component: _settings2.default })
+	  _react2.default.createElement(_reactRouter.Route, { path: "/register", component: _register2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: "/login", component: _login2.default })
 	);
 
 /***/ },
@@ -26407,6 +26406,10 @@
 
 	var _footer2 = _interopRequireDefault(_footer);
 
+	var _close = __webpack_require__(231);
+
+	var _close2 = _interopRequireDefault(_close);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26418,26 +26421,95 @@
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
-	  function App() {
+	  function App(props) {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	    _this.state = { url: "", addNew: false };
+	    _this.onChangeUrl = _this.onChangeUrl.bind(_this);
+	    _this.onToggleAdd = _this.onToggleAdd.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(App, [{
+	    key: "onToggleAdd",
+	    value: function onToggleAdd() {
+	      var addBool = !this.state.addNew;
+	      this.setState({ addNew: addBool });
+	    }
+	  }, {
+	    key: "onChangeUrl",
+	    value: function onChangeUrl(event) {
+	      var regex = /^(ftp|http|https):\/\/[^ "]+$/;
+	      var input = event.target.value;
+	      if (input.match(regex)) {
+	        this.setState({ url: event.target.value });
+	      }
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
+	      var addNew = this.state.addNew;
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "main-container" },
-	        _react2.default.createElement(_header2.default, null),
+	        _react2.default.createElement(_header2.default, { onToggleAdd: this.onToggleAdd }),
 	        _react2.default.createElement(
 	          "div",
 	          { className: "main-body" },
 	          this.props.children
 	        ),
 	        _react2.default.createElement(_footer2.default, null),
-	        _react2.default.createElement("div", { className: "overlay" })
+	        addNew && _react2.default.createElement(
+	          "div",
+	          null,
+	          _react2.default.createElement("div", { className: "overlay" }),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "light-box" },
+	            _react2.default.createElement("div", { className: "close-box", onClick: this.onToggleAdd, dangerouslySetInnerHTML: { __html: _close2.default } }),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "img-preview" },
+	              _react2.default.createElement(
+	                "p",
+	                null,
+	                "Image Preview"
+	              ),
+	              _react2.default.createElement("img", { src: this.state.url })
+	            ),
+	            _react2.default.createElement(
+	              "form",
+	              { className: "pin-form" },
+	              _react2.default.createElement(
+	                "label",
+	                { htmlFor: "url" },
+	                "Image Url"
+	              ),
+	              _react2.default.createElement("input", { className: "pin-input", onChange: this.onChangeUrl, type: "text", ref: "url" }),
+	              _react2.default.createElement(
+	                "label",
+	                { htmlFor: "title" },
+	                "Title"
+	              ),
+	              _react2.default.createElement("input", { className: "pin-input", ref: "title" }),
+	              _react2.default.createElement(
+	                "label",
+	                { htmlFor: "event" },
+	                "Event Url (Opt)"
+	              ),
+	              _react2.default.createElement("input", { className: "pin-input", ref: "event" }),
+	              _react2.default.createElement(
+	                "label",
+	                { htmlFor: "address" },
+	                "Address (Opt)"
+	              ),
+	              _react2.default.createElement("input", { className: "pin-input", ref: "address" }),
+	              _react2.default.createElement("input", { className: "submit-btn", type: "submit", value: "Submit" })
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -26476,13 +26548,21 @@
 	var Header = function (_React$Component) {
 	  _inherits(Header, _React$Component);
 
-	  function Header() {
+	  function Header(props) {
 	    _classCallCheck(this, Header);
 
-	    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+
+	    _this.onToggleAdd = _this.onToggleAdd.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(Header, [{
+	    key: "onToggleAdd",
+	    value: function onToggleAdd() {
+	      this.props.onToggleAdd();
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -26500,6 +26580,11 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "header-selection" },
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: "", onClick: this.onToggleAdd },
+	            "Add"
+	          ),
 	          _react2.default.createElement(
 	            _reactRouter.Link,
 	            { to: "/register" },
@@ -26581,6 +26666,12 @@
 
 /***/ },
 /* 231 */
+/***/ function(module, exports) {
+
+	module.exports = "<svg version=\"1.1\" id=\"Capa_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 31.112 31.112\" style=\"enable-background:new 0 0 31.112 31.112;\" xml:space=\"preserve\"><polygon points=\"31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 29.698,31.112 31.112,29.698 16.97,15.556 \"></polygon><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>"
+
+/***/ },
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26594,6 +26685,14 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _like = __webpack_require__(241);
+
+	var _like2 = _interopRequireDefault(_like);
+
+	var _view = __webpack_require__(242);
+
+	var _view2 = _interopRequireDefault(_view);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26670,11 +26769,13 @@
 	            _react2.default.createElement(
 	              "p",
 	              null,
+	              _react2.default.createElement("span", { dangerouslySetInnerHTML: { __html: _view2.default } }),
 	              pin.views
 	            ),
 	            _react2.default.createElement(
 	              "p",
 	              null,
+	              _react2.default.createElement("span", { dangerouslySetInnerHTML: { __html: _like2.default } }),
 	              pin.likes
 	            )
 	          )
@@ -26694,34 +26795,304 @@
 	exports.default = Home;
 
 /***/ },
-/* 232 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-/***/ },
 /* 233 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var React = _interopRequireWildcard(_react);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Register = function (_React$Component) {
+	  _inherits(Register, _React$Component);
+
+	  function Register(props) {
+	    _classCallCheck(this, Register);
+
+	    var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
+
+	    _this.onNameChange = _this.onNameChange.bind(_this);
+	    _this.onEmailChange = _this.onEmailChange.bind(_this);
+	    _this.onPasswordChange = _this.onPasswordChange.bind(_this);
+	    _this.onConfirmChange = _this.onConfirmChange.bind(_this);
+	    _this.isValidSubmit = _this.isValidSubmit.bind(_this);
+	    _this.onSubmit = _this.onSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Register, [{
+	    key: "onNameChange",
+	    value: function onNameChange(event) {
+	      this.props.onNameChange(event.target.value);
+	    }
+	  }, {
+	    key: "onEmailChange",
+	    value: function onEmailChange(event) {
+	      this.props.onEmailChange(event.target.value);
+	    }
+	  }, {
+	    key: "onPasswordChange",
+	    value: function onPasswordChange(event) {
+	      this.props.onPasswordChange(event.target.value);
+	    }
+	  }, {
+	    key: "onConfirmChange",
+	    value: function onConfirmChange(event) {
+	      this.props.onConfirmChange(event.target.value);
+	    }
+	  }, {
+	    key: "isValidSubmit",
+	    value: function isValidSubmit() {
+
+	      var errors = [];
+
+	      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.props.email)) {
+	        errors.push("Invalid email address");
+	      }
+	      if (!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/.test(this.props.password)) {
+	        errors.push("Password must be 7 or more characters, contain a digit, and a special character");
+	      }
+	      if (this.props.password !== this.props.confirm) {
+	        errors.push("Passwords don't match");
+	      }
+	      if (errors.length) {
+	        this.props.onError(errors);
+	        return false;
+	      } else {
+	        this.props.onError();
+	        return true;
+	      }
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(event) {
+	      event.preventDefault();
+	      if (this.isValidSubmit()) {
+	        this.props.onSubmit();
+	        this.refs["user-name"].value = "";
+	        this.refs.email.value = "";
+	        this.refs.password.value = "";
+	        this.refs.confirm.value = "";
+	      }
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return React.createElement(
+	        "form",
+	        { className: "register-form", onSubmit: this.onSubmit },
+	        React.createElement(
+	          "label",
+	          { htmlFor: "user-name" },
+	          "Username"
+	        ),
+	        React.createElement("input", { className: "register-input", onChange: this.onNameChange, type: "text", ref: "user-name" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "email" },
+	          "Email"
+	        ),
+	        React.createElement("input", { className: "register-input", onChange: this.onEmailChange, type: "email", ref: "email" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "password" },
+	          "Password"
+	        ),
+	        React.createElement("input", { className: "register-input", onChange: this.onPasswordChange, type: "password", ref: "password" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "confirm-password" },
+	          "Confirm Password"
+	        ),
+	        React.createElement("input", { className: "register-input", onChange: this.onConfirmChange, type: "password", ref: "confirm" }),
+	        React.createElement("input", { className: "register-submit", type: "submit", value: "Sign Up" })
+	      );
+	    }
+	  }]);
+
+	  return Register;
+	}(React.Component);
+
+	exports.default = Register;
 
 /***/ },
 /* 234 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var React = _interopRequireWildcard(_react);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Login = function (_React$Component) {
+	  _inherits(Login, _React$Component);
+
+	  function Login(props) {
+	    _classCallCheck(this, Login);
+
+	    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+
+	    _this.onSubmit = _this.onSubmit.bind(_this);
+	    _this.onEmailChange = _this.onEmailChange.bind(_this);
+	    _this.onPasswordChange = _this.onPasswordChange.bind(_this);
+	    _this.isValidSubmit = _this.isValidSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Login, [{
+	    key: "isValidSubmit",
+	    value: function isValidSubmit() {
+	      var errors = [];
+
+	      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.props.email)) {
+	        errors.push("Invalid email address");
+	      }
+	      if (errors.length) {
+	        this.props.onError(errors);
+	        return false;
+	      } else {
+	        this.props.onError();
+	        return true;
+	      }
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(event) {
+	      event.preventDefault();
+	      if (this.isValidSubmit()) {
+	        this.props.onSubmit();
+	        this.refs.email.value = "";
+	        this.refs.password.value = "";
+	      }
+	    }
+	  }, {
+	    key: "onEmailChange",
+	    value: function onEmailChange(event) {
+	      this.props.onEmailChange(event.target.value);
+	    }
+	  }, {
+	    key: "onPasswordChange",
+	    value: function onPasswordChange(event) {
+	      this.props.onPasswordChange(event.target.value);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return React.createElement(
+	        "form",
+	        { className: "login-form", onSubmit: this.onSubmit },
+	        React.createElement(
+	          "label",
+	          { htmlFor: "email" },
+	          "Email"
+	        ),
+	        React.createElement("input", { className: "login-input", onChange: this.onEmailChange, type: "email", ref: "email" }),
+	        React.createElement(
+	          "label",
+	          { htmlFor: "password" },
+	          "Password"
+	        ),
+	        React.createElement("input", { className: "login-input", onChange: this.onPasswordChange, type: "password", ref: "password" }),
+	        React.createElement("input", { className: "login-submit", type: "submit", value: "Sign In" })
+	      );
+	    }
+	  }]);
+
+	  return Login;
+	}(React.Component);
+
+	exports.default = Login;
 
 /***/ },
 /* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Settings = function (_React$Component) {
+	  _inherits(Settings, _React$Component);
+
+	  function Settings() {
+	    _classCallCheck(this, Settings);
+
+	    return _possibleConstructorReturn(this, (Settings.__proto__ || Object.getPrototypeOf(Settings)).apply(this, arguments));
+	  }
+
+	  _createClass(Settings, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "h1",
+	        null,
+	        "Settings"
+	      );
+	    }
+	  }]);
+
+	  return Settings;
+	}(_react2.default.Component);
+
+	exports.default = Settings;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(236);
+	var content = __webpack_require__(237);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(239)(content, {});
+	var update = __webpack_require__(240)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26738,16 +27109,16 @@
 	}
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(237);
+	var content = __webpack_require__(238);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(239)(content, {});
+	var update = __webpack_require__(240)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26764,21 +27135,21 @@
 	}
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(238)();
+	exports = module.exports = __webpack_require__(239)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "* {\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n  margin: 0;\n  padding: 0;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  color: #212121;\n  letter-spacing: 0.05em;\n}\n\na {\n  text-decoration: none;\n  color: inherit;\n}\n\n/* App View */\n\n.main-container {\n  display: flex;\n  display: -webkit-flex;\n  min-height: 100vh;\n  flex-direction: column;\n}\n\n.main-body {\n  display: flex;\n  display: -webkit-flex;\n  flex: 1;\n  -webkit-flex: 1;\n  background-color: #eeeeee;\n  border-bottom: 1px solid #e0e0e0;\n}\n\n.header-container {\n  display: flex;\n  display: -webkit-flex;\n  padding: 1.5em;\n  border-bottom: 1px solid #e0e0e0;\n  justify-content: space-between;\n  -webkit-justify-content: space-between;\n}\n\n.header-title {\n  flex: 0 0 auto;\n  -webkit-flex: 0 0 auto;\n}\n\n.header-selection {\n  flex: 0 0 auto;\n  -webkit-flex: 0 0 auto;\n}\n\n.header-selection > a {\n  border-right: 1px solid #e0e0e0;\n  padding: 0 1em;\n}\n\n.header-selection a:first-child {\n  border-left: 1px solid #e0e0e0;\n}\n\n.footer-container {\n  padding: 0.25em 0;\n  margin: 0 auto;\n}\n\n/* Home View */\n\n.home-container {\n  max-width: 68em;\n  margin: 0 auto;\n  display: flex;\n  display: -webkit-flex;\n  flex-wrap: wrap;\n  -webkit-flex-wrap: wrap;\n}\n\n.pin-card {\n  padding: 0 1em;\n  margin: 0 1em 1em 0;\n  min-width: 20em;\n  max-width: 20em;\n  flex: 1;\n  -webkit-flex: 1;\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: column;\n  -webkit-flex-direction: column;\n  background-color: white;\n  border-radius: 3px;\n  border: 1px solid #e0e0e0;\n}\n\n.pin-card > img {\n  max-width: 100%;\n}\n\n.pin-details {\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: row;\n  -webkit-flex-direction: row;\n}\n\n.pin-details > p {\n  margin: 1em auto;\n}\n\n.overlay {\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0%;\n  bottom: 0%;\n  width: 100%;\n  height: 100%;\n  background-color: black;\n  opacity: 0.75;\n  z-index: 10;\n}\n", ""]);
+	exports.push([module.id, "* {\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n  margin: 0;\n  padding: 0;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  color: #424242;\n  letter-spacing: 0.05em;\n}\n\na {\n  text-decoration: none;\n  color: inherit;\n}\n\nsvg {\n  fill: #757575;\n  width: 18px;\n  height: 18px;\n}\n\n/* App View */\n\n.main-container {\n  display: flex;\n  display: -webkit-flex;\n  min-height: 100vh;\n  flex-direction: column;\n}\n\n.main-body {\n  display: flex;\n  display: -webkit-flex;\n  flex: 1;\n  -webkit-flex: 1;\n  background-color: #eeeeee;\n  border-bottom: 1px solid #bdbdbd;\n}\n\n.header-container {\n  display: flex;\n  display: -webkit-flex;\n  padding: 1.5em;\n  border-bottom: 1px solid #bdbdbd;\n  justify-content: space-between;\n  -webkit-justify-content: space-between;\n}\n\n.header-title {\n  flex: 0 0 auto;\n  -webkit-flex: 0 0 auto;\n}\n\n.header-selection {\n  flex: 0 0 auto;\n  -webkit-flex: 0 0 auto;\n}\n\n.header-selection > a {\n  border-right: 1px solid #bdbdbd;\n  padding: 0 1em;\n}\n\n.header-selection a:first-child {\n  border-left: 1px solid #bdbdbd;\n}\n\n.footer-container {\n  padding: 0.25em 0;\n  margin: 0 auto;\n}\n\n/* Home View */\n\n.home-container {\n  max-width: 68em;\n  margin: 0 auto;\n  display: flex;\n  display: -webkit-flex;\n  flex-wrap: wrap;\n  -webkit-flex-wrap: wrap;\n}\n\n.pin-card {\n  padding: 0 1em;\n  margin: 1em;\n  min-width: 20em;\n  max-width: 20em;\n  flex: 1;\n  -webkit-flex: 1;\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: column;\n  -webkit-flex-direction: column;\n  background-color: white;\n  border: 1px solid #bdbdbd;\n}\n\n.pin-card > img {\n  max-width: 100%;\n}\n\n.pin-details {\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: row;\n  -webkit-flex-direction: row;\n}\n\n.pin-details > p {\n  margin: 1em auto;\n}\n\n.pin-details svg {\n  position: relative;\n  top: 3px;\n  right: 3px;\n}\n\n.overlay {\n  position: fixed;\n  top: 0;\n  left: 0%;\n  bottom: 0%;\n  width: 100%;\n  height: 100%;\n  background-color: black;\n  opacity: 0.6;\n  z-index: 10;\n}\n\n.light-box {\n  padding: 1em;\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: column;\n  -webkit-flex-direction: column;\n  align-items: center;\n  -webkit-align-items: center;\n  position: fixed;\n  top: 5em;\n  left: calc(50% - 15em);\n  width: 28em;\n  height: 38em;\n  background-color: white;\n  border: 1px solid #bdbdbd;\n  z-index: 15;\n}\n\n.close-box {\n  position: absolute;\n  top: 1em;\n  right: 1em;\n  cursor: pointer;\n}\n\n.img-preview {\n  margin-top: 1em;\n  width: 20em;\n  height: 15em;\n  border: 1px solid #cccccc;\n  display: flex;\n  display: -webkit-flex;\n  justify-content: center;\n  -webkit-justify-content: center;\n  align-items: center;\n  -webkit-align-items: center;\n}\n\n.img-preview > img {\n  position: relative;\n  z-index: 10;\n  max-width: 100%;\n  max-height: 100%;\n}\n\n.img-preview > p {\n  position: absolute;\n  margin: 0;\n  z-index: 1;\n}\n\n.pin-form {\n  width: 20em;\n  margin: 1em auto;\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: column;\n  -webkit-flex-direction: column;\n}\n\n.pin-input {\n  font-weight: 300;\n  letter-spacing: 0.05em;\n  font-size: 1.2em;\n  padding: 0.1em;\n  margin-bottom: 0.5em;\n}\n\n.pin-input label {\n  font-weight: 300;\n  letter-spacing: 0.05em;\n}\n\n.pin-input:focus {\n  outline: none;\n}\n\n.submit-btn {\n  margin-top: 0.5em;\n  border: none;\n  color: white;\n  font-size: 1.2em;\n  font-weight: 300;\n  letter-spacing: 0.05em;\n  padding: 0.5em 2em;\n  background-color: #007fff;\n  cursor: pointer;\n}\n\n/* Register View */\n\n.register-form {\n  width: 20em;\n  margin: 1em auto;\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: column;\n  -webkit-flex-direction: column;\n  background-color: white;\n  padding: 1em;\n  height: 22em;\n  border: 1px solid #bdbdbd;\n}\n\n.register-input {\n  font-weight: 300;\n  letter-spacing: 0.05em;\n  font-size: 1.2em;\n  padding: 0.1em;\n  margin-bottom: 0.5em;\n}\n\n.register-submit {\n  margin-top: 0.5em;\n  border: none;\n  color: white;\n  font-size: 1.2em;\n  font-weight: 300;\n  letter-spacing: 0.05em;\n  padding: 0.5em 2em;\n  background-color: #007fff;\n  cursor: pointer;\n}\n\n/* Login View */\n\n.login-form {\n  width: 20em;\n  margin: 1em auto;\n  display: flex;\n  display: -webkit-flex;\n  flex-direction: column;\n  -webkit-flex-direction: column;\n  background-color: white;\n  padding: 1em;\n  height: 15em;\n  border: 1px solid #bdbdbd;\n}\n\n.login-input {\n  font-weight: 300;\n  letter-spacing: 0.05em;\n  font-size: 1.2em;\n  padding: 0.1em;\n  margin-bottom: 0.5em;\n}\n\n.login-submit {\n  margin-top: 0.5em;\n  border: none;\n  color: white;\n  font-size: 1.2em;\n  font-weight: 300;\n  letter-spacing: 0.05em;\n  padding: 0.5em 2em;\n  background-color: #007fff;\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports) {
 
 	/*
@@ -26834,7 +27205,7 @@
 
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -27084,6 +27455,18 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 241 */
+/***/ function(module, exports) {
+
+	module.exports = "<svg version=\"1.1\" id=\"Capa_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 51.997 51.997\" style=\"enable-background:new 0 0 51.997 51.997;\" xml:space=\"preserve\"><g><path d=\"M51.911,16.242C51.152,7.888,45.239,1.827,37.839,1.827c-4.93,0-9.444,2.653-11.984,6.905 c-2.517-4.307-6.846-6.906-11.697-6.906c-7.399,0-13.313,6.061-14.071,14.415c-0.06,0.369-0.306,2.311,0.442,5.478 c1.078,4.568,3.568,8.723,7.199,12.013l18.115,16.439l18.426-16.438c3.631-3.291,6.121-7.445,7.199-12.014 C52.216,18.553,51.97,16.611,51.911,16.242z M49.521,21.261c-0.984,4.172-3.265,7.973-6.59,10.985L25.855,47.481L9.072,32.25 c-3.331-3.018-5.611-6.818-6.596-10.99c-0.708-2.997-0.417-4.69-0.416-4.701l0.015-0.101C2.725,9.139,7.806,3.826,14.158,3.826 c4.687,0,8.813,2.88,10.771,7.515l0.921,2.183l0.921-2.183c1.927-4.564,6.271-7.514,11.069-7.514 c6.351,0,11.433,5.313,12.096,12.727C49.938,16.57,50.229,18.264,49.521,21.261z\"></path></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>"
+
+/***/ },
+/* 242 */
+/***/ function(module, exports) {
+
+	module.exports = "<svg version=\"1.1\" id=\"Capa_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 59.2 59.2\" style=\"enable-background:new 0 0 59.2 59.2;\" xml:space=\"preserve\"><g><path d=\"M51.062,21.561c-11.889-11.889-31.232-11.889-43.121,0L0,29.501l8.138,8.138c5.944,5.944,13.752,8.917,21.561,8.917 s15.616-2.972,21.561-8.917l7.941-7.941L51.062,21.561z M49.845,36.225c-11.109,11.108-29.184,11.108-40.293,0l-6.724-6.724 l6.527-6.527c11.109-11.108,29.184-11.108,40.293,0l6.724,6.724L49.845,36.225z\"></path><path d=\"M28.572,21.57c-3.86,0-7,3.14-7,7c0,0.552,0.448,1,1,1s1-0.448,1-1c0-2.757,2.243-5,5-5c0.552,0,1-0.448,1-1 S29.125,21.57,28.572,21.57z\"></path><path d=\"M29.572,16.57c-7.168,0-13,5.832-13,13s5.832,13,13,13s13-5.832,13-13S36.741,16.57,29.572,16.57z M29.572,40.57 c-6.065,0-11-4.935-11-11s4.935-11,11-11s11,4.935,11,11S35.638,40.57,29.572,40.57z\"></path></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>"
 
 /***/ }
 /******/ ]);

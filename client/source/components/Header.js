@@ -4,6 +4,13 @@ import React from "react";
 import { Link } from "react-router";
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onToggleAdd = this.onToggleAdd.bind(this);
+  }
+  onToggleAdd() {
+    this.props.onToggleAdd();
+  }
   render() {
     return (
       <div className="header-container">
@@ -11,6 +18,7 @@ class Header extends React.Component {
           <Link to="/">BucketList SF</Link>
         </div>
         <div className="header-selection">
+          <Link to="" onClick={ this.onToggleAdd }>Add</Link>
           <Link to="/register">Signup</Link>
           <Link to="/login">Login</Link>
           <Link to="/search">Search</Link>
