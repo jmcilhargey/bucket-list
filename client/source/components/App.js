@@ -6,45 +6,42 @@ import Footer from "./footer";
 
 import close from "../images/close.svg";
 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { increment, newPost, previewImage } from "../actions";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { url: "", addNew: false };
-    this.onChangeUrl = this.onChangeUrl.bind(this);
-    this.onToggleAdd = this.onToggleAdd.bind(this);
+    this.onPreviewImage = this.onPreviewImage.bind(this);
   }
-  onToggleAdd() {
-    const addBool = !this.state.addNew;
-    this.setState({ addNew: addBool });
-  }
-  onChangeUrl(event) {
+  onPreviewImage(event) {
     const regex = /^(ftp|http|https):\/\/[^ "]+$/;
     const input = event.target.value;
     if (input.match(regex)) {
-      this.setState({ url: event.target.value });
+      this.props.previewImage(input);
     }
   }
   render() {
-    const addNew = this.state.addNew
     return (
       <div className="main-container">
-        <Header onToggleAdd={ this.onToggleAdd } />
+        <Header onToggleAdd={ () => this.props.newPost() } />
         <div className="main-body">
           { this.props.children }
         </div>
         <Footer />
-        { addNew &&
+        { this.props.add &&
         <div>
           <div className="overlay"></div>
           <div className="light-box">
-            <div className="close-box" onClick={ this.onToggleAdd } dangerouslySetInnerHTML={{ __html: close }}></div>
+            <div className="close-box" onClick={ () => this.props.newPost() } dangerouslySetInnerHTML={{ __html: close }}></div>
             <div className="img-preview">
               <p>Image Preview</p>
-              <img src={ this.state.url } />
+              <img src={ this.props.url } />
             </div>
             <form className="pin-form">
               <label htmlFor="url">Image Url</label>
-              <input className="pin-input" onChange={ this.onChangeUrl } type="text" ref="url" />
+              <input className="pin-input" onChange={ this.onPreviewImage } type="text" ref="url" />
               <label htmlFor="title">Title</label>
               <input className="pin-input" ref="title" />
               <label htmlFor="event">Event Url (Opt)</label>
@@ -60,4 +57,25 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapStatetoProps = (state) => {
+  return {
+    counter: state.counter,
+    add: state.add,
+    url: state.url
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    increment: increment,
+    newPost: newPost,
+    previewImage: previewImage
+  }, dispatch);
+}
+
+const MainApp = connect(
+  mapStatetoProps,
+  mapDispatchToProps
+)(App);
+
+export default MainApp;

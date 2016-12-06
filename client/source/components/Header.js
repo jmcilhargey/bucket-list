@@ -8,7 +8,8 @@ class Header extends React.Component {
     super(props);
     this.onToggleAdd = this.onToggleAdd.bind(this);
   }
-  onToggleAdd() {
+  onToggleAdd(e) {
+    e.preventDefault();
     this.props.onToggleAdd();
   }
   render() {
