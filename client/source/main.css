@@ -40,22 +40,38 @@ svg {
   display: -webkit-flex;
   flex: 1;
   -webkit-flex: 1;
-  background-color: #eeeeee;
-  border-bottom: 1px solid #bdbdbd;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .header-container {
   display: flex;
   display: -webkit-flex;
   padding: 1.5em;
-  border-bottom: 1px solid #bdbdbd;
+  border-bottom: 1px solid #e0e0e0;
   justify-content: space-between;
   -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
 }
 
 .header-title {
+  font-size: 1.2em;
   flex: 0 0 auto;
   -webkit-flex: 0 0 auto;
+  transition: all 0.25s linear;
+}
+
+.header-title:hover {
+  color: #01579B;
+}
+
+.header-title svg {
+  position: relative;
+  top: 3px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
 }
 
 .header-selection {
@@ -64,12 +80,18 @@ svg {
 }
 
 .header-selection > a {
-  border-right: 1px solid #bdbdbd;
+  font-size: 1.1em;
+  border-right: 1px solid #e0e0e0;
   padding: 0 1em;
+  transition: all 0.25s linear;
+}
+
+.header-selection > a:hover {
+  color: #01579B;
 }
 
 .header-selection a:first-child {
-  border-left: 1px solid #bdbdbd;
+  border-left: 1px solid #e0e0e0;
 }
 
 .footer-container {
@@ -84,6 +106,8 @@ svg {
   margin: 0 auto 1em auto;
   display: flex;
   display: -webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
 }
@@ -100,7 +124,14 @@ svg {
   flex-direction: column;
   -webkit-flex-direction: column;
   background-color: white;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #e0e0e0;
+  transition: all 0.25s linear;
+  cursor: zoom-in;
+}
+
+.pin-card:hover {
+  color: #01579B;
+  border-color: #01579B;
 }
 
 .pin-card > img {
@@ -148,18 +179,18 @@ svg {
   -webkit-align-items: center;
   position: fixed;
   top: 5em;
-  left: calc(50% - 15em);
-  width: 28em;
+  left: calc(50% - 13em);
+  width: 26em;
   height: 38em;
   background-color: white;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #e0e0e0;
   z-index: 15;
 }
 
 .close-box {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 0.75em;
+  right: 0.75em;
   cursor: pointer;
 }
 
@@ -167,7 +198,7 @@ svg {
   margin-top: 1em;
   width: 20em;
   height: 15em;
-  border: 1px solid #cccccc;
+  border: 1px solid #e0e0e0;
   display: flex;
   display: -webkit-flex;
   justify-content: center;
@@ -229,17 +260,20 @@ svg {
 
 /* Register View */
 
-.register-form {
+.register-container {
   width: 20em;
   margin: 1em auto;
+  padding: 1em;
+  height: 24em;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+}
+
+.register-form {
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
   -webkit-flex-direction: column;
-  background-color: white;
-  padding: 1em;
-  height: 22em;
-  border: 1px solid #bdbdbd;
 }
 
 .register-input {
@@ -257,24 +291,50 @@ svg {
   font-size: 1.2em;
   font-weight: 300;
   letter-spacing: 0.05em;
+  padding: 0.6em 2em;
+  background-color: #007fff;
+  cursor: pointer;
+}
+
+.facebook-btn {
+  width: 100%;
+  text-align: center;
+  line-height: 1.5em;
+  margin-top: 0.5em;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 300;
+  letter-spacing: 0.05em;
   padding: 0.5em 2em;
   background-color: #007fff;
   cursor: pointer;
 }
 
+.facebook-btn svg {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  top: 4px;
+  left: 5px;
+}
+
 /* Login View */
 
-.login-form {
+.login-container {
   width: 20em;
   margin: 1em auto;
+  padding: 1em;
+  height: 17em;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+}
+
+.login-form {
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
   -webkit-flex-direction: column;
-  background-color: white;
-  padding: 1em;
-  height: 15em;
-  border: 1px solid #bdbdbd;
 }
 
 .login-input {
@@ -292,7 +352,7 @@ svg {
   font-size: 1.2em;
   font-weight: 300;
   letter-spacing: 0.05em;
-  padding: 0.5em 2em;
+  padding: 0.6em 2em;
   background-color: #007fff;
   cursor: pointer;
 }
