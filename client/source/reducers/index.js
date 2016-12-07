@@ -1,6 +1,6 @@
 "use strict";
 
-export function bucketApp(state = { counter: 0, add: false, url: "" }, action) {
+export function bucketApp(state = { counter: 0, add: false, url: "", id: null }, action) {
 
   switch (action.type) {
     case "INCREMENT":
@@ -11,6 +11,12 @@ export function bucketApp(state = { counter: 0, add: false, url: "" }, action) {
       break;
     case "PREVIEW_IMAGE":
       return Object.assign({}, state, { url: action.url });
+      break;
+    case "SHOW_DETAIL":
+      return Object.assign({}, state, { id: action.id });
+      break;
+    case "HIDE_DETAIL":
+      return Object.assign({}, state, { id: null });
       break;
     default:
       return state;

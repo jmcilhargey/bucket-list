@@ -11,3 +11,7 @@ export function newPost() {
 export function previewImage(url) {
   return { type: "PREVIEW_IMAGE", url: url };
 }
+
+export function showDetail(id) {
+  return { type: "SHOW_DETAIL", id: id };
+}
