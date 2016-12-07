@@ -3,8 +3,7 @@
 import React from "react";
 import Header from "./header";
 import Footer from "./footer";
-
-import close from "../images/close.svg";
+import LightBox from "./lightbox";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -13,9 +12,9 @@ import { increment, newPost, previewImage } from "../actions";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.onPreviewImage = this.onPreviewImage.bind(this);
+    this.onChangeUrl = this.onChangeUrl.bind(this);
   }
-  onPreviewImage(event) {
+  onChangeUrl(event) {
     const regex = /^(ftp|http|https):\/\/[^ "]+$/;
     const input = event.target.value;
     if (input.match(regex)) {
@@ -30,34 +29,17 @@ class App extends React.Component {
           { this.props.children }
         </div>
         <Footer />
-        { this.props.add &&
-        <div>
-          <div className="overlay"></div>
-          <div className="light-box">
-            <div className="close-box" onClick={ () => this.props.newPost() } dangerouslySetInnerHTML={{ __html: close }}></div>
-            <div className="img-preview">
-              <p>Image Preview</p>
-              <img src={ this.props.url } />
-            </div>
-            <form className="pin-form">
-              <label htmlFor="url">Image Url</label>
-              <input className="pin-input" onChange={ this.onPreviewImage } type="text" ref="url" />
-              <label htmlFor="title">Title</label>
-              <input className="pin-input" ref="title" />
-              <label htmlFor="event">Event Url (Opt)</label>
-              <input className="pin-input" ref="event" />
-              <label htmlFor="address">Address (Opt)</label>
-              <input className="pin-input" ref="address" />
-              <input className="submit-btn" type="submit" value="Submit" />
-            </form>
-          </div>
-        </div> }
+        { this.props.add && <LightBox
+          onChangeUrl={ (event) => this.onChangeUrl(event) }
+          onNewPost={ () => this.props.newPost() }
+          url={ this.props.url } />
+        }
       </div>
     );
   }
 }
 
-const mapStatetoProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     counter: state.counter,
     add: state.add,
@@ -74,7 +56,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const MainApp = connect(
-  mapStatetoProps,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
 

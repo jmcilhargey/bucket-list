@@ -12,6 +12,7 @@ class Home extends React.Component {
       "user": "Joe",
       "name": "Walk the Golden Gate",
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
+      "address": "Golden Gate Bridge, San Francisco, CA",
       "time": "1h",
       "views": 15,
       "likes": 3
@@ -20,6 +21,7 @@ class Home extends React.Component {
       "user": "Joe",
       "name": "Walk the Golden Gate",
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
+      "address": "Golden Gate Bridge, San Francisco, CA",
       "time": "1h",
       "views": 15,
       "likes": 3
@@ -28,6 +30,7 @@ class Home extends React.Component {
       "user": "Joe",
       "name": "Walk the Golden Gate",
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
+      "address": "Golden Gate Bridge, San Francisco, CA",
       "time": "1h",
       "views": 15,
       "likes": 3
@@ -36,6 +39,7 @@ class Home extends React.Component {
       "user": "Joe",
       "name": "Walk the Golden Gate",
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
+      "address": "Golden Gate Bridge, San Francisco, CA",
       "time": "1h",
       "views": 15,
       "likes": 3

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Link } from "react-router";
+import bucket from "../images/bucket.svg";
 
 class Header extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Header extends React.Component {
     return (
       <div className="header-container">
         <div className="header-title">
-          <Link to="/">BucketList SF</Link>
+          <Link to="/">BucketList<span dangerouslySetInnerHTML={{ __html: bucket }}></span></Link>
         </div>
         <div className="header-selection">
           <Link to="" onClick={ this.onToggleAdd }>Add</Link>

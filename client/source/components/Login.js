@@ -1,6 +1,7 @@
 "use strict";
 
 import * as React from "react";
+import facebook from "../images/facebook.svg";
 
 class Login extends React.Component {
   constructor(props) {
@@ -40,13 +41,16 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <form className="login-form" onSubmit={ this.onSubmit }>
-        <label htmlFor="email">Email</label>
-        <input className="login-input" onChange={ this.onEmailChange } type="email" ref="email" />
-        <label htmlFor="password">Password</label>
-        <input className="login-input" onChange={ this.onPasswordChange } type="password" ref="password" />
-        <input className="login-submit" type="submit" value="Sign In"/>
-      </form>
+      <div className="login-container">
+        <form className="login-form" onSubmit={ this.onSubmit }>
+          <label htmlFor="email">Email</label>
+          <input className="login-input" onChange={ this.onEmailChange } type="email" ref="email" />
+          <label htmlFor="password">Password</label>
+          <input className="login-input" onChange={ this.onPasswordChange } type="password" ref="password" />
+          <input className="login-submit" type="submit" value="Sign In"/>
+        </form>
+        <button className="facebook-btn">Login With <span dangerouslySetInnerHTML={{ __html: facebook }}></span></button>
+      </div>
     );
   }
 }
