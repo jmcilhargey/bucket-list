@@ -1,0 +1,88 @@
+"use strict";
+
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema({
+  email: {
+    type: String,
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    trim: true,
+    default: ""
+  },
+  local: {
+    username: {
+      type: String,
+      unique: true,
+      trim: true
+    },
+    password: {
+      type: String
+    }
+  },
+  facebook: {
+    username: {
+      type: String,
+      unique: true
+    },
+    token: {
+      type: String,
+      unique: true
+    },
+    id: {
+      type: String,
+      unique: true
+    }
+  }
+});
+
+UserSchema.statics.authenticate = function (username, password, callback) {
+
+ User.findOne({ local.username: username })
+   .exec((error, user) => {
+     if (error) {
+       return callback(error);
+     }
+     if (!user) {
+       let error = new Error("User not found");
+       error.status = 401;
+       return callback(error);
+     }
+     bcrypt.compare(password, user.password, function (error, match) {
+       if (match) {
+         return callback(null, user);
+       } else if (error) {
+         return next(error);
+       } else {
+         let error = new Error("Credentials don't match");
+         error.status = 401;
+         return callback(error);
+       }
+     });
+   });
+};
+
+UserSchema.pre("save", function (next) {
+
+ const user = this;
+ if (!user.isModified("local.password")) {
+   return next();
+ }
+ bcrypt.genSalt(10, function (error, salt) {
+   bcrypt.hash(user.local.password, salt, function (error, hash) {
+     if (error) {
+       return next(error);
+     }
+     user.local.password = hash;
+     next();
+   });
+ });
+});
+
+const User = mongoose.model("User", UserSchema);
+
+module.exports = User;
