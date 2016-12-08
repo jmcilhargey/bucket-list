@@ -1,24 +1,48 @@
 "use strict";
 
-export function bucketApp(state = { counter: 0, add: false, url: "", id: null }, action) {
+import { combineReducers } from "redux";
 
-  switch (action.type) {
-    case "INCREMENT":
-      return Object.assign({}, state, { counter: state.counter + 1 });
+const newPinBox = (state = {
+    isBox: false,
+    previewUrl: ""
+  }, action) => {
+
+  switch(action.type) {
+    case "SHOW_BOX":
+      return Object.assign({}, state, { isBox: true });
       break;
-    case "NEW_POST":
-      return Object.assign({}, state, { add: !state.add });
+    case "HIDE_BOX":
+      return Object.assign({}, state, { isBox: false });
       break;
     case "PREVIEW_IMAGE":
       return Object.assign({}, state, { url: action.url });
-      break;
-    case "SHOW_DETAIL":
-      return Object.assign({}, state, { id: action.id });
-      break;
-    case "HIDE_DETAIL":
-      return Object.assign({}, state, { id: null });
       break;
     default:
       return state;
   }
 }
+
+const pinsView = (state = {
+  isFetching: false,
+  data: null,
+  receivedAt: null
+}, action) => {
+
+  switch(action.type) {
+    case "REQUEST_PINS":
+      return Object.assign({}, state, { isFetching: true });
+      break;
+    case "RECEIVE_PINS":
+      return Object.assign({}, state, { isFetching: false, data: action.data, receivedAt: action.receivedAt });
+      break;
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  newPinBox,
+  pinsView
+});
+
+export default rootReducer;
