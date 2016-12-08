@@ -63,7 +63,7 @@ svg {
 }
 
 .header-title:hover {
-  color: #01579B;
+  color: #01579b;
 }
 
 .header-title svg {
@@ -87,7 +87,7 @@ svg {
 }
 
 .header-selection > a:hover {
-  color: #01579B;
+  color: #01579b;
 }
 
 .header-selection a:first-child {
@@ -103,7 +103,7 @@ svg {
 
 .home-container {
   max-width: 68em;
-  margin: 0 auto 1em auto;
+  margin: 1em auto 2em auto;
   display: flex;
   display: -webkit-flex;
   justify-content: center;
@@ -130,8 +130,8 @@ svg {
 }
 
 .pin-card:hover {
-  color: #01579B;
-  border-color: #01579B;
+  color: #01579b;
+  border-color: #01579b;
 }
 
 .pin-card > img {
@@ -261,10 +261,11 @@ svg {
 /* Register View */
 
 .register-container {
-  width: 20em;
-  margin: 1em auto;
+  flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  width: 22em;
+  margin: 2em auto;
   padding: 1em;
-  height: 24em;
   border: 1px solid #e0e0e0;
   background-color: white;
 }
@@ -276,12 +277,26 @@ svg {
   -webkit-flex-direction: column;
 }
 
+.register-form label {
+  margin-top: 0.5em;
+}
+
 .register-input {
+  width: 100%;
   font-weight: 300;
   letter-spacing: 0.05em;
   font-size: 1.2em;
-  padding: 0.1em;
-  margin-bottom: 0.5em;
+  padding: 0.3em 0.1em;
+  margin: 0.5em 0;
+}
+
+.register-input:focus {
+  outline: 1px solid #007fff;
+}
+
+.register-error {
+  margin: 0;
+  color: #ef5350;
 }
 
 .register-submit {
@@ -322,12 +337,13 @@ svg {
 /* Login View */
 
 .login-container {
-  width: 20em;
-  margin: 1em auto;
+  flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  width: 22em;
+  margin: 2em auto;
   padding: 1em;
-  height: 17em;
-  background-color: white;
   border: 1px solid #e0e0e0;
+  background-color: white;
 }
 
 .login-form {
@@ -338,11 +354,16 @@ svg {
 }
 
 .login-input {
+  width: 100%;
   font-weight: 300;
   letter-spacing: 0.05em;
   font-size: 1.2em;
-  padding: 0.1em;
-  margin-bottom: 0.5em;
+  padding: 0.3em 0.1em;
+  margin: 0.5em 0;
+}
+
+.login-input:focus {
+  outline: 1px solid #007fff;
 }
 
 .login-submit {
