@@ -7,11 +7,6 @@ import bucket from "../images/bucket.svg";
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.onToggleAdd = this.onToggleAdd.bind(this);
-  }
-  onToggleAdd(e) {
-    e.preventDefault();
-    this.props.onToggleAdd();
   }
   render() {
     return (
@@ -20,7 +15,7 @@ class Header extends React.Component {
           <Link to="/">BucketList<span dangerouslySetInnerHTML={{ __html: bucket }}></span></Link>
         </div>
         <div className="header-selection">
-          <Link to="" onClick={ this.onToggleAdd }>Add</Link>
+          <Link to="" onClick={ this.props.onShowBox }>Add</Link>
           <Link to="/register">Signup</Link>
           <Link to="/login">Login</Link>
           <Link to="/search">Search</Link>

@@ -12,7 +12,7 @@ class LightBox extends React.Component {
       <div>
         <div className="overlay"></div>
         <div className="light-box">
-          <div className="close-box" onClick={ this.props.onNewPost } dangerouslySetInnerHTML={{ __html: close }}></div>
+          <div className="close-box" onClick={ this.props.onHideBox } dangerouslySetInnerHTML={{ __html: close }}></div>
           <div className="img-preview">
             <p>Image Preview</p>
             <img src={ this.props.url } />

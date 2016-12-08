@@ -7,12 +7,16 @@ import LightBox from "./lightbox";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { increment, newPost, previewImage } from "../actions";
+import { showBox, hideBox, previewImage, shouldFetchPins, fetchPins } from "../actions";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.onChangeUrl = this.onChangeUrl.bind(this);
+  }
+  componentDidMount() {
+    if (shouldFetchPins()) {
+      console.log("hi");
+    }
   }
   onChangeUrl(event) {
     const regex = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -22,17 +26,18 @@ class App extends React.Component {
     }
   }
   render() {
+    const isBox = this.props.isBox;
     return (
       <div className="main-container">
-        <Header onToggleAdd={ () => this.props.newPost() } />
+        <Header onShowBox={ () => this.props.showBox() } />
         <div className="main-body">
           { this.props.children }
         </div>
         <Footer />
-        { this.props.add && <LightBox
-          onChangeUrl={ (event) => this.onChangeUrl(event) }
-          onNewPost={ () => this.props.newPost() }
-          url={ this.props.url } />
+        { isBox && <LightBox
+          onChangeUrl={ (event) => this.onChangeUrl(event).bind(this) }
+          onHideBox={ () => this.props.hideBox() }
+          url={ this.props.previewUrl } />
         }
       </div>
     );
@@ -40,18 +45,20 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const { newPinBox, pinsView } = state
   return {
-    counter: state.counter,
-    add: state.add,
-    url: state.url
+    isBox: newPinBox.isBox,
+    previewUrl: newPinBox.previewUrl
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    increment: increment,
-    newPost: newPost,
-    previewImage: previewImage
+    showBox: showBox,
+    hideBox: hideBox,
+    previewImage: previewImage,
+    shouldFetchPins: shouldFetchPins,
+    fetchPins: fetchPins
   }, dispatch);
 }
 
