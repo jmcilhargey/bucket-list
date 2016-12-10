@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema({
   email: {
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
     username: {
       type: String,
       unique: true,
+      sparse: true,
       trim: true
     },
     password: {
@@ -27,14 +29,17 @@ const UserSchema = new Schema({
   facebook: {
     username: {
       type: String,
-      unique: true
+      unique: true,
+      sparse: true
     },
     token: {
       type: String,
+      sparse: true,
       unique: true
     },
     id: {
       type: String,
+      sparse: true,
       unique: true
     }
   }
@@ -42,7 +47,7 @@ const UserSchema = new Schema({
 
 UserSchema.statics.authenticate = function (username, password, callback) {
 
- User.findOne({ local.username: username })
+ User.findOne({ "local.username": username })
    .exec((error, user) => {
      if (error) {
        return callback(error);
@@ -52,7 +57,8 @@ UserSchema.statics.authenticate = function (username, password, callback) {
        error.status = 401;
        return callback(error);
      }
-     bcrypt.compare(password, user.password, function (error, match) {
+
+     bcrypt.compare(password, user.local.password, function (error, match) {
        if (match) {
          return callback(null, user);
        } else if (error) {

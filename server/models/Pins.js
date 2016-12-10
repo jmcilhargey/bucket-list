@@ -4,18 +4,22 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PinSchema = new Schema({
-  image: {
+  user: {
     type: String,
     required: true
   },
-  user: {
+  title: {
+    type: String,
+    required: true
+  },
+  image: {
     type: String,
     required: true
   },
   address: {
     type: String
   },
-  url: {
+  event: {
     type: String
   },
   views: {
