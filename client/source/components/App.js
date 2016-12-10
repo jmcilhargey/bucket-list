@@ -7,16 +7,14 @@ import LightBox from "./lightbox";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { showBox, hideBox, previewImage, shouldFetchPins, fetchPins } from "../actions";
+import { showBox, hideBox, previewImage, sendPinData } from "../actions";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    if (shouldFetchPins()) {
-      console.log("hi");
-    }
+  handleSubmit(values) {
+    this.props.sendPinData(values);
   }
   onChangeUrl(event) {
     const regex = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -35,9 +33,10 @@ class App extends React.Component {
         </div>
         <Footer />
         { isBox && <LightBox
-          onChangeUrl={ (event) => this.onChangeUrl(event).bind(this) }
+          onChangeUrl={ (event) => this.onChangeUrl(event) }
           onHideBox={ () => this.props.hideBox() }
-          url={ this.props.previewUrl } />
+          previewUrl={ this.props.previewUrl }
+          onSubmit={ this.handleSubmit.bind(this) } />
         }
       </div>
     );
@@ -45,7 +44,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { newPinBox, pinsView } = state
+  const { newPinBox } = state
   return {
     isBox: newPinBox.isBox,
     previewUrl: newPinBox.previewUrl
@@ -57,8 +56,7 @@ const mapDispatchToProps = (dispatch) => {
     showBox: showBox,
     hideBox: hideBox,
     previewImage: previewImage,
-    shouldFetchPins: shouldFetchPins,
-    fetchPins: fetchPins
+    sendPinData: sendPinData
   }, dispatch);
 }
 
