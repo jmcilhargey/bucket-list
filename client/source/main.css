@@ -178,10 +178,10 @@ svg {
   align-items: center;
   -webkit-align-items: center;
   position: fixed;
-  top: 5em;
+  top: 2em;
   left: calc(50% - 13em);
   width: 26em;
-  height: 38em;
+  height: 44em;
   background-color: white;
   border: 1px solid #e0e0e0;
   z-index: 15;
@@ -197,7 +197,7 @@ svg {
 .img-preview {
   margin-top: 1em;
   width: 20em;
-  height: 15em;
+  height: 12em;
   border: 1px solid #e0e0e0;
   display: flex;
   display: -webkit-flex;
@@ -230,10 +230,11 @@ svg {
 }
 
 .pin-input {
+  width: 100%;
   font-weight: 300;
   letter-spacing: 0.05em;
   font-size: 1.2em;
-  padding: 0.1em;
+  padding: 0.3em 0.1em;
   margin-bottom: 0.5em;
 }
 
@@ -244,6 +245,25 @@ svg {
 
 .pin-input:focus {
   outline: none;
+}
+
+.pin-select {
+  margin-bottom: 0.5em;
+  background: transparent;
+  width: 100%;
+  padding: 5px;
+  font-size: 1.2em;
+  border: 1px solid #cccccc;
+  height: 2em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.pin-select option {
+  color: inherit;
+  font-weight: 300;
+  font-size: 1.2em;
 }
 
 .submit-btn {
@@ -376,4 +396,9 @@ svg {
   padding: 0.6em 2em;
   background-color: #007fff;
   cursor: pointer;
+}
+
+.login-error {
+  margin: 0;
+  color: #ef5350;
 }

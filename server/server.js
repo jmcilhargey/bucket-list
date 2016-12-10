@@ -13,6 +13,8 @@ const uri = process.env.MONGO_URI || "mongodb://localhost/test";
 const port = process.env.PORT || 3000;
 const routes = require("./routes");
 
+require("./seed")();
+
 mongoose.Promise = global.Promise;
 mongoose.connect(uri, (err, res) => {
   if (err) {
@@ -40,9 +42,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  if (err && !err.status) {
-    err.status = 500;
-  }
+  err.status = err.status || 500;
   res.send({ error: err.status, message: err.message });
 });
 
