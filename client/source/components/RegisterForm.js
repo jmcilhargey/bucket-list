@@ -6,7 +6,6 @@ import facebook from "../images/facebook.svg";
 
 const validate = (values) => {
   const errors = {};
-
   if (!values.username) {
     errors.username = "Username required";
   } else if (values.username.length < 3) {
@@ -36,7 +35,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
-class RegisterForm extends React.Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -57,9 +56,9 @@ class RegisterForm extends React.Component {
   }
 }
 
-RegisterForm = reduxForm({
+const RegisterForm = reduxForm({
   form: "register",
   validate
-})(RegisterForm);
+})(Form);
 
 export default RegisterForm

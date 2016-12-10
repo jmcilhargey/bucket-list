@@ -1,63 +1,44 @@
 "use strict";
 
 import React from "react";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchPins } from "../actions";
+
 import like from "../images/like.svg";
 import view from "../images/view.svg";
 import time from "../images/time.svg";
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    if (!this.props.pinData) {
+      this.props.fetchPins();
+    }
+  }
   render() {
-    const data = [
-    {
-      "user": "Joe",
-      "name": "Walk the Golden Gate",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
-      "address": "Golden Gate Bridge, San Francisco, CA",
-      "time": "1h",
-      "views": 15,
-      "likes": 3
-    },
-    {
-      "user": "Joe",
-      "name": "Walk the Golden Gate",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
-      "address": "Golden Gate Bridge, San Francisco, CA",
-      "time": "1h",
-      "views": 15,
-      "likes": 3
-    },
-    {
-      "user": "Joe",
-      "name": "Walk the Golden Gate",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
-      "address": "Golden Gate Bridge, San Francisco, CA",
-      "time": "1h",
-      "views": 15,
-      "likes": 3
-    },
-    {
-      "user": "Joe",
-      "name": "Walk the Golden Gate",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/800px-GoldenGateBridge-001.jpg",
-      "address": "Golden Gate Bridge, San Francisco, CA",
-      "time": "1h",
-      "views": 15,
-      "likes": 3
-    }];
-    const pins = data.map((pin, index) => {
-      return (
-        <div className="pin-card" key={ index }>
-          <p>{ pin.name }</p>
-          <img src={ pin.url }/>
-          <div className="pin-details">
-            <p>{ pin.user }</p>
-            <p><span dangerouslySetInnerHTML={{ __html: time }}></span>{ pin.time }</p>
-            <p><span dangerouslySetInnerHTML={{ __html: view }}></span>{ pin.views }</p>
-            <p><span dangerouslySetInnerHTML={{ __html: like }}></span>{ pin.likes }</p>
+    const data = this.props.pinData;
+    console.log(data);
+    let pins = null;
+    if (data) {
+      pins = data.map((pin, index) => {
+        return (
+          <div className="pin-card" key={ index }>
+            <p>{ pin.title }</p>
+            <img src={ pin.image }/>
+            <div className="pin-details">
+              <p>{ pin.user }</p>
+              <p><span dangerouslySetInnerHTML={{ __html: time }}></span>{ pin.time }</p>
+              <p><span dangerouslySetInnerHTML={{ __html: view }}></span>{ pin.views }</p>
+              <p><span dangerouslySetInnerHTML={{ __html: like }}></span>{ pin.likes }</p>
+            </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
+    }
     return (
       <div className="home-container">
         { pins }
@@ -66,4 +47,24 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+  const { pinsView } = state
+  return {
+    pinData: pinsView.pinData,
+    isFetching: pinsView.isFetching,
+    receivedAt: pinsView.receivedAt
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    fetchPins: fetchPins
+  }, dispatch);
+}
+
+const HomeView = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
+
+export default HomeView;
