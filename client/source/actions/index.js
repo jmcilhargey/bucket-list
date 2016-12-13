@@ -1,6 +1,7 @@
 "use strict";
 
 import fetch from "isomorphic-fetch";
+import { browserHistory } from "react-router";
 
 export const fetchPins = () => (dispatch) => {
   dispatch(requestPins());
@@ -99,6 +100,7 @@ export const sendUserData = (data) => (dispatch) => {
   }).then(response => response.json())
     .then(json => {
       dispatch(receiveUser(json));
+      browserHistory.push("/")
     })
     .catch(error => {
       dispatch(receiveUser(error));
@@ -131,6 +133,34 @@ export const sendLoginData = (data) => (dispatch) => {
   }).then(response => response.json())
     .then(json => {
       dispatch(receiveUser(json));
+      browserHistory.push("/")
+    })
+    .catch(error => {
+      dispatch(receiveUser(error));
+    });
+}
+
+export const fbLogin = () => {
+  return {
+    type: "FB_LOGIN",
+    isRegistering: true
+  }
+}
+
+export const facebookLogin = () => (dispatch) => {
+  dispatch(fbLogin());
+  return fetch("/api/facebook", {
+    method: "GET",
+    headers: {
+      "Accept": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+    credentials: "include",
+    mode: "no-cors"
+  }).then(response => response.json())
+    .then(json => {
+      dispatch(receiveUser(json));
+      browserHistory.push("/")
     })
     .catch(error => {
       dispatch(receiveUser(error));
