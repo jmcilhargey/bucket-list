@@ -5,14 +5,17 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 const app = express();
+const router = express.Router();
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
+const passport = require("passport");
 
 const uri = process.env.MONGO_URI || "mongodb://localhost/test";
 const port = process.env.PORT || 3000;
-const routes = require("./routes");
 
+require("./routes")(router, passport);
+require("./strategies/facebook")(passport);
 require("./seed")();
 
 mongoose.Promise = global.Promise;
@@ -29,7 +32,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname + "/../client/source/images/favicon.ico")));
 app.use(express.static(path.join(__dirname + "/../client/build")));
 
-app.use("/api", routes);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use("/api", router);
 
 app.get("/*", (req, res, next) => {
   res.status(301).redirect("/");

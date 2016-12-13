@@ -5,17 +5,12 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema({
-  email: {
-    type: String,
-    unique: true,
-    trim: true
-  },
-  name: {
-    type: String,
-    trim: true,
-    default: ""
-  },
   local: {
+    email: {
+      type: String,
+      unique: true,
+      trim: true
+    },
     username: {
       type: String,
       unique: true,
@@ -29,7 +24,6 @@ const UserSchema = new Schema({
   facebook: {
     username: {
       type: String,
-      unique: true,
       sparse: true
     },
     token: {
