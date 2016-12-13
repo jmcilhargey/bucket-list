@@ -53,6 +53,9 @@ const registerUser = (state = {
     case "REGISTER_USER":
       return Object.assign({}, state, { isRegistering: true });
       break;
+    case "FB_LOGIN":
+      return Object.assign({}, state, { isRegistering: true });
+      break;
     default:
       return state;
   }

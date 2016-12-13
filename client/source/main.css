@@ -102,23 +102,20 @@ svg {
 /* Home View */
 
 .home-container {
-  max-width: 68em;
+  max-width: 64em;
   margin: 1em auto 2em auto;
   display: flex;
   display: -webkit-flex;
-  justify-content: center;
-  -webkit-justify-content: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
 }
 
 .pin-card {
   padding: 0 1em;
-  margin: 1em 0.5em 0 0.5em;
-  min-width: 20em;
-  max-width: 20em;
-  flex: 1;
-  -webkit-flex: 1;
+  margin: 1em 0;
+  width: calc(33% - 1em);
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
@@ -127,6 +124,7 @@ svg {
   border: 1px solid #e0e0e0;
   transition: all 0.25s linear;
   cursor: zoom-in;
+  justify-content: space-between;
 }
 
 .pin-card:hover {
@@ -136,6 +134,8 @@ svg {
 
 .pin-card > img {
   max-width: 100%;
+  max-height: 20em;
+  margin: 0 auto;
 }
 
 .pin-details {
@@ -332,6 +332,7 @@ svg {
 }
 
 .facebook-btn {
+  display: block;
   width: 100%;
   text-align: center;
   line-height: 1.5em;
