@@ -5,7 +5,7 @@ import LoginForm from "./loginform";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { sendLoginData, receiveUser } from "../actions";
+import { sendLoginData, receiveUser, facebookLogin } from "../actions";
 
 class Register extends React.Component {
   constructor(props) {
@@ -14,10 +14,14 @@ class Register extends React.Component {
   handleLogin(values) {
     this.props.sendLoginData(values);
   }
+  handleFacebook() {
+    this.props.facebookLogin();
+  }
   render() {
-    console.log(this.props.userData);
     return (
-      <LoginForm onSubmit={ this.handleLogin.bind(this) }/>
+      <LoginForm
+        onSubmit={ this.handleLogin.bind(this) }
+        onClick={ this.handleFacebook.bind(this) }/>
     );
   }
 }
@@ -33,7 +37,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     sendLoginData: sendLoginData,
-    receiveUser: receiveUser
+    receiveUser: receiveUser,
+    facebookLogin: facebookLogin
   }, dispatch);
 }
 

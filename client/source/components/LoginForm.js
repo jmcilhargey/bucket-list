@@ -38,7 +38,7 @@ class Form extends React.Component {
           <Field component={ renderField } type="password" name="password" label="Password" />
           <button className="login-submit" type="submit" disabled={ pristine || submitting }>Sign In</button>
         </form>
-        <button className="facebook-btn">Login With <span dangerouslySetInnerHTML={{ __html: facebook }}></span></button>
+        <button onClick={ this.props.onClick } className="facebook-btn">Register With <span dangerouslySetInnerHTML={{ __html: facebook }}></span></button>
       </div>
     );
   }

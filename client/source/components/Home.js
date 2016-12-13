@@ -21,7 +21,6 @@ class Home extends React.Component {
   }
   render() {
     const data = this.props.pinData;
-    console.log(data);
     let pins = null;
     if (data) {
       pins = data.map((pin, index) => {
