@@ -62,15 +62,43 @@ const registerUser = (state = {
 }
 
 const loginUser = (state = {
+  loggingIn: false,
   isLogin: false,
   userData: null
 }, action) => {
   switch(action.type) {
     case "LOGIN_USER":
-      return Object.assign({}, state, { isLogin: true });
+      return Object.assign({}, state, { loggingIn: true });
       break;
     case "RECEIVE_USER":
-      return Object.assign({}, state, { isLogin: false, userData: action.data });
+      return Object.assign({}, state, { loggingIn: false, isLogin: true, userData: action.data });
+      break;
+    case "RESET_USER":
+      return Object.assign({}, state, { isLogin: false, userData: null });
+      break;
+    default:
+      return state;
+  }
+}
+
+const messageInfo = (state = {
+  validMessage: null,
+  errorMessage: null,
+  showMessage: false
+}, action) => {
+
+  switch(action.type) {
+    case "STORE_MESSAGE":
+      return Object.assign({}, state, { validMessage: action.message });
+      break;
+    case "STORE_ERROR":
+      return Object.assign({}, state, { errorMessage: action.error });
+      break;
+    case "CLEAR_MESSAGE":
+      return Object.assign({}, state, { validMessage: null });
+      break;
+    case "CLEAR_ERROR":
+      return Object.assign({}, state, { errorMessage: null });
       break;
     default:
       return state;
@@ -82,6 +110,7 @@ const rootReducer = combineReducers({
   pinsView,
   registerUser,
   loginUser,
+  messageInfo,
   form: reduxFormReducer
 });
 
