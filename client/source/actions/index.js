@@ -3,6 +3,21 @@
 import fetch from "isomorphic-fetch";
 import { browserHistory } from "react-router";
 
+/* Home Component */
+
+export const requestPins = () => {
+  return { type: "REQUEST_PINS" };
+}
+
+export const receivePins = (json) => {
+  return {
+    type: "RECEIVE_PINS",
+    isFetching: false,
+    data: json.data,
+    receivedAt: Date.now()
+  }
+}
+
 export const fetchPins = () => (dispatch) => {
   dispatch(requestPins());
   return fetch("api/pins", {
@@ -16,9 +31,11 @@ export const fetchPins = () => (dispatch) => {
       dispatch(receivePins(json));
     })
     .catch(error => {
-      dispatch(receivePins(json));
+      dispatch(storeError(json));
     });
 }
+
+/* LightBox Component */
 
 export const showBox = () => {
   return { type: "SHOW_BOX" };
@@ -42,19 +59,6 @@ export const showPinDetail = (id) => {
   };
 }
 
-export const requestPins = () => {
-  return { type: "REQUEST_PINS" };
-}
-
-export const receivePins = (json) => {
-  return {
-    type: "RECEIVE_PINS",
-    isFetching: false,
-    data: json.data,
-    receivedAt: Date.now()
-  }
-}
-
 export const createPin = () => {
   return { type: "CREATE_PIN" }
 }
@@ -74,11 +78,14 @@ export const sendPinData = (data) => (dispatch, getState) => {
   }).then(response => response.json())
     .then(json => {
       dispatch(receivePins(json));
+      dispatch(storeMessage(json));
     })
     .catch(error => {
-      dispatch(receivePins(error));
+      dispatch(storeError(error));
     });
 }
+
+/* Register Component */
 
 export const registerUser = () => {
   return {
@@ -100,10 +107,10 @@ export const sendUserData = (data) => (dispatch) => {
   }).then(response => response.json())
     .then(json => {
       dispatch(receiveUser(json));
-      browserHistory.push("/")
+      browserHistory.push("/login");
     })
     .catch(error => {
-      dispatch(receiveUser(error));
+      dispatch(storeError(error));
     });
 }
 
@@ -113,6 +120,8 @@ export const receiveUser = (json) => {
     data: json
   }
 }
+
+/* Login Component */
 
 export const loginUser = () => {
   return {
@@ -136,7 +145,7 @@ export const sendLoginData = (data) => (dispatch) => {
       browserHistory.push("/")
     })
     .catch(error => {
-      dispatch(receiveUser(error));
+      dispatch(storeError(error));
     });
 }
 
@@ -160,9 +169,62 @@ export const facebookLogin = () => (dispatch) => {
   }).then(response => response.json())
     .then(json => {
       dispatch(receiveUser(json));
-      browserHistory.push("/")
+      browserHistory.push("/");
     })
     .catch(error => {
-      dispatch(receiveUser(error));
+      dispatch(storeError(error));
     });
+}
+
+/* Logout */
+
+export const resetUser = () => {
+  return {
+    type: "RESET_USER"
+  }
+}
+
+export const logoutUser = () => (dispatch) => {
+  dispatch(resetUser());
+  return fetch("api/logout", {
+    method: "GET",
+    headers: {
+      "Accept": "application/json"
+    },
+    credentials: "same-origin"
+  }).then(response => response.json())
+    .then(json => {
+      dispatch(storeMessage(json));
+    })
+    .catch(error => {
+      dispatch(storeError(json));
+    });
+}
+
+/* Messaging */
+
+export const storeMessage = (data) => {
+  return {
+    type: "STORE_MESSAGE",
+    message: data.message
+  }
+}
+
+export const clearMessage = () => {
+  return {
+    type: "CLEAR_MESSAGE"
+  }
+}
+
+export const storeError = (data) => {
+  return {
+    type: "STORE_ERROR",
+    error: data.error
+  }
+}
+
+export const clearError = () => {
+  return {
+    type: "CLEAR_ERROR"
+  }
 }
