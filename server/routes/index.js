@@ -22,11 +22,13 @@ module.exports = (router, passport) => {
   router.post("/pin", mid.loggedIn, (req, res, next) => {
 
     const pin = req.body;
+
     if (!pin.image || !pin.title) {
       let error = new Error("Image URL and title required");
       error.status = 400;
       return next(error);
     }
+
     let newPin = {
       "user": req.decoded.username,
       "image": pin.image,
@@ -34,18 +36,21 @@ module.exports = (router, passport) => {
       "address": pin.address,
       "event": pin.event
     }
+
     Pins.create(newPin, (error, pin) => {
       if (error) {
-        console.log(error);
         return next(error);
       }
-      res.status(200).json({ pin: pin, message: ["Success, your pin has been posted!"] });
+      Pins.find({}, (error, pins) => {
+        res.status(200).json({ data: pins, message: "Success, your pin has been posted!" });
+      });
     });
   });
 
   router.post("/register", (req, res, next) => {
 
     const user = req.body;
+
     if (!user.username || !user.email || !user.password) {
       let error = new Error("Username, email, and password required");
       error.status = 400;
@@ -69,7 +74,7 @@ module.exports = (router, passport) => {
       if (error) {
         return next(error);
       }
-      res.status(200).json({ user: user, message: ["Success, welcome to BucketList!"] });
+      res.status(200).json({ message: "Success, welcome to BucketList!" });
     });
   });
 
@@ -80,13 +85,13 @@ module.exports = (router, passport) => {
 
     Users.authenticate(decoded[0], decoded[1], (error, user) => {
       if (error || !user) {
-        res.json({ error: ["Invalid username or password"] })
+        res.json({ error: "Invalid username or password" })
       } else {
         jwt.sign({ username: user.local.username, id: user._id }, process.env.JWT_SECRET, { algorithm: "HS256", expiresIn: "1d"}, (error, token) => {
           if (error) {
             return next(error);
           }
-          res.status(200).json({ token: token, authenticated: true });
+          res.status(200).json({ token: token });
         });
       }
     });
@@ -94,17 +99,21 @@ module.exports = (router, passport) => {
 
   router.get("/logout", (req, res, next) => {
 
+    if (req.decoded) {
+      req.decoded = null;
+    }
+    res.status(301).send({ message: "Logged out from system" });
   });
 
   router.get("/facebook", passport.authenticate("facebook"));
 
   router.get("/login/facebook/return", passport.authenticate("facebook",
-  { failureRedirect: "/" }), (req, res) => {
+  { failureRedirect: "/login" }), (req, res) => {
     jwt.sign({ username: req.user.facebook.username, id: req.user._id }, process.env.JWT_SECRET, { algorithm: "HS256", expiresIn: "1d"}, (error, token) => {
       if (error) {
         return next(error);
       }
-      res.status(200).json({ token: token, authenticated: true });
+      res.status(200).json({ token: token });
     });
   });
 
