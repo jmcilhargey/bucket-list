@@ -16,6 +16,6 @@ let store = createStore(rootReducer, persistedState, applyMiddleware(thunk, prom
 
 store.subscribe(debounce(() => {
   saveState(store.getState());
-}, 2000));
+}, 1000));
 
 export default store;

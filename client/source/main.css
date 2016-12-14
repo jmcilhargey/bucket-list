@@ -79,11 +79,15 @@ svg {
   -webkit-flex: 0 0 auto;
 }
 
-.header-selection > a {
+.header-selection a {
   font-size: 1.1em;
   border-right: 1px solid #e0e0e0;
   padding: 0 1em;
   transition: all 0.25s linear;
+}
+
+.header-login {
+  display: inline-block;
 }
 
 .header-selection > a:hover {
