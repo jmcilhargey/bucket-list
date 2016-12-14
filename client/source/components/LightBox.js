@@ -8,7 +8,7 @@ const validate = (values) => {
   const errors = {};
   if (!values.image) {
     errors.image = "Image URL required";
-  } else if (value.image.test(/^(ftp|http|https):\/\/[^ "]+$/)) {
+  } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(values.image)) {
     errors.image = "Must be valid URL";
   }
   if (!values.title) {
@@ -64,7 +64,7 @@ class Box extends React.Component {
 }
 
 const LightBox = reduxForm({
-  form: "register",
+  form: "addPin",
   validate
 })(Box);
 

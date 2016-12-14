@@ -9,6 +9,7 @@ class Header extends React.Component {
     super(props);
   }
   render() {
+    const isLogin = this.props.isLogin;
     return (
       <div className="header-container">
         <div className="header-title">
@@ -16,8 +17,12 @@ class Header extends React.Component {
         </div>
         <div className="header-selection">
           <Link to="" onClick={ this.props.onShowBox }>Add</Link>
-          <Link to="/register">Signup</Link>
-          <Link to="/login">Login</Link>
+          { !isLogin ?
+            <div className="header-login">
+              <Link to="/login">Login</Link>
+              <Link to="/register">Signup</Link>
+            </div>
+          : <Link to="" onClick={ this.props.onLogout }>Logout</Link> }
           <Link to="/search">Search</Link>
         </div>
       </div>

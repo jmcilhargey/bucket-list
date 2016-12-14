@@ -18,7 +18,6 @@ class Register extends React.Component {
     this.props.facebookLogin();
   }
   render() {
-    console.log(this.props.userData);
     return (
       <RegisterForm
         onSubmit={ this.handleRegister.bind(this) }

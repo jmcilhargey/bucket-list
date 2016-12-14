@@ -7,7 +7,7 @@ import LightBox from "./lightbox";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { showBox, hideBox, previewImage, sendPinData } from "../actions";
+import { showBox, hideBox, previewImage, sendPinData, logoutUser } from "../actions";
 
 class App extends React.Component {
   constructor(props) {
@@ -23,11 +23,17 @@ class App extends React.Component {
       this.props.previewImage(input);
     }
   }
+  handleLogout() {
+    this.props.logoutUser();
+  }
   render() {
     const isBox = this.props.isBox;
     return (
       <div className="main-container">
-        <Header onShowBox={ () => this.props.showBox() } />
+        <Header
+          onShowBox={ () => this.props.showBox() }
+          isLogin= { this.props.isLogin }
+          onLogout={ this.handleLogout.bind(this) } />
         <div className="main-body">
           { this.props.children }
         </div>
@@ -44,10 +50,12 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { newPinBox } = state
+  const { newPinBox, loginUser } = state
   return {
     isBox: newPinBox.isBox,
-    previewUrl: newPinBox.previewUrl
+    previewUrl: newPinBox.previewUrl,
+    userData: loginUser.userData,
+    isLogin: loginUser.isLogin
   };
 }
 
@@ -56,7 +64,8 @@ const mapDispatchToProps = (dispatch) => {
     showBox: showBox,
     hideBox: hideBox,
     previewImage: previewImage,
-    sendPinData: sendPinData
+    sendPinData: sendPinData,
+    logoutUser: logoutUser
   }, dispatch);
 }
 
