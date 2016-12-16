@@ -26908,8 +26908,8 @@
 	}(React.Component);
 
 	Box.propTypes = {
-	  onHideBox: React.PropTypes.element.func,
-	  previewUrl: React.PropTypes.element.func
+	  onHideBox: React.PropTypes.func,
+	  previewUrl: React.PropTypes.func
 	};
 
 	var LightBox = (0, _reduxForm.reduxForm)({
@@ -41367,9 +41367,14 @@
 	    }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      dispatch(receiveUser(json));
-	      dispatch(storeMessage(json));
-	      _reactRouter.browserHistory.push("/");
+	      if (json.token) {
+	        dispatch(receiveUser(json));
+	        dispatch(storeMessage(json));
+	        _reactRouter.browserHistory.push("/");
+	      }
+	      if (json.error) {
+	        dispatch(storeError(json));
+	      }
 	    }).catch(function (error) {
 	      dispatch(storeError(error));
 	    });
@@ -41397,9 +41402,14 @@
 	    }).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      dispatch(receiveUser(json));
-	      dispatch(storeMessage(json));
-	      _reactRouter.browserHistory.push("/");
+	      if (json.token) {
+	        dispatch(receiveUser(json));
+	        dispatch(storeMessage(json));
+	        _reactRouter.browserHistory.push("/");
+	      }
+	      if (json.error) {
+	        dispatch(storeError(json));
+	      }
 	    }).catch(function (error) {
 	      dispatch(storeError(error));
 	    });
@@ -42162,11 +42172,11 @@
 	          "div",
 	          { className: "pin-detail-box" },
 	          React.createElement("div", { className: "close-box", onClick: this.props.onClickHide, dangerouslySetInnerHTML: { __html: _close2.default } }),
-	          React.createElement("img", { className: "pin-detail-image", src: pin.image }),
+	          React.createElement("img", { className: "pin-detail-image", src: pinData.image }),
 	          React.createElement(
 	            "h3",
 	            null,
-	            pin.title,
+	            pinData.title,
 	            " "
 	          ),
 	          React.createElement(
@@ -42178,7 +42188,7 @@
 	              "Posted by"
 	            ),
 	            ": ",
-	            pin.user,
+	            pinData.user,
 	            " "
 	          ),
 	          React.createElement(
@@ -42190,7 +42200,7 @@
 	              "Located at:"
 	            ),
 	            " ",
-	            pin.address,
+	            pinData.address,
 	            " "
 	          ),
 	          React.createElement(
@@ -42202,7 +42212,7 @@
 	              "Likes:"
 	            ),
 	            " ",
-	            pin.likes,
+	            pinData.likes,
 	            " "
 	          ),
 	          React.createElement(
@@ -42214,7 +42224,7 @@
 	              "Views:"
 	            ),
 	            " ",
-	            pin.views,
+	            pinData.views,
 	            " "
 	          ),
 	          React.createElement("span", { onClick: this.props.onClickLike, className: "pin-detail-like", dangerouslySetInnerHTML: { __html: _like2.default } })
@@ -42227,9 +42237,9 @@
 	}(React.Component);
 
 	PinDetail.propTypes = {
-	  pinData: React.PropTypes.element.object,
-	  onClickHide: React.PropTypes.element.func,
-	  onClickLike: React.PropTypes.element.func
+	  pinData: React.PropTypes.object,
+	  onClickHide: React.PropTypes.func,
+	  onClickLike: React.PropTypes.func
 	};
 
 	exports.default = PinDetail;
@@ -42472,7 +42482,7 @@
 	}(React.Component);
 
 	Form.propTypes = {
-	  onClick: React.PropTypes.element.func
+	  onClick: React.PropTypes.func
 	};
 
 	var RegisterForm = (0, _reduxForm.reduxForm)({
@@ -42696,7 +42706,7 @@
 	}(React.Component);
 
 	Form.propTypes = {
-	  onClick: React.PropTypes.element.func
+	  onClick: React.PropTypes.func
 	};
 
 	var LoginForm = (0, _reduxForm.reduxForm)({

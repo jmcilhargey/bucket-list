@@ -64,8 +64,8 @@ class Box extends React.Component {
 }
 
 Box.propTypes = {
-  onHideBox: React.PropTypes.element.func,
-  previewUrl: React.PropTypes.element.func
+  onHideBox: React.PropTypes.func,
+  previewUrl: React.PropTypes.func
 };
 
 const LightBox = reduxForm({

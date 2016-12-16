@@ -45,7 +45,7 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
-  onClick: React.PropTypes.element.func
+  onClick: React.PropTypes.func
 };
 
 const LoginForm = reduxForm({

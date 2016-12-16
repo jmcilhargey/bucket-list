@@ -218,9 +218,14 @@ export const sendLoginData = (data) => (dispatch) => {
     credentials: "same-origin"
   }).then(response => response.json())
     .then(json => {
-      dispatch(receiveUser(json));
-      dispatch(storeMessage(json));
-      browserHistory.push("/")
+      if (json.token) {
+        dispatch(receiveUser(json));
+        dispatch(storeMessage(json));
+        browserHistory.push("/");
+      }
+      if (json.error) {
+        dispatch(storeError(json));
+      }
     })
     .catch(error => {
       dispatch(storeError(error));
@@ -246,9 +251,14 @@ export const facebookLogin = () => (dispatch) => {
     mode: "no-cors"
   }).then(response => response.json())
     .then(json => {
-      dispatch(receiveUser(json));
-      dispatch(storeMessage(json));
-      browserHistory.push("/");
+      if (json.token) {
+        dispatch(receiveUser(json));
+        dispatch(storeMessage(json));
+        browserHistory.push("/");
+      }
+      if (json.error) {
+        dispatch(storeError(json));
+      }
     })
     .catch(error => {
       dispatch(storeError(error));
