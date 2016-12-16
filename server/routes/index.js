@@ -2,8 +2,8 @@
 
 const jwt = require("jsonwebtoken");
 const mid = require("../middleware");
-const Users = require("../models/users");
-const Pins = require("../models/pins");
+const Users = require("../models/Users");
+const Pins = require("../models/Pins");
 
 module.exports = (router, passport) => {
 

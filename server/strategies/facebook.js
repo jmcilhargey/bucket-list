@@ -1,7 +1,7 @@
 "use strict";
 
 const Strategy = require("passport-facebook").Strategy;
-const User = require("../models/users");
+const User = require("../models/Users");
 
 module.exports = (passport) => {
 

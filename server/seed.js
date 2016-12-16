@@ -1,6 +1,6 @@
 "use strict";
 
-const Pins = require("./models/pins");
+const Pins = require("./models/Pins");
 
 const seedPins = [
   {
