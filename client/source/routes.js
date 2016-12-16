@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Router, Route, IndexRoute } from "react-router";
-import App from "./components/app";
-import Home from "./components/home";
-import Register from "./components/register";
-import Login from "./components/login";
-import Settings from "./components/settings";
+import App from "./containers/app";
+import Home from "./containers/home";
+import Register from "./containers/register";
+import Login from "./containers/login";
+import Settings from "./containers/settings";
 
 export default (
   <Route path="/" component={ App }>
