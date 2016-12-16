@@ -1,14 +1,12 @@
 "use strict";
 
-"use strict";
-
 const jwt = require("jsonwebtoken");
 
 module.exports = {
 
   loggedOut: function(req, res, next) {
     if (req.decoded) {
-      res.redirect("/");
+      res.status(301).redirect("/");
     }
     return next();
   },

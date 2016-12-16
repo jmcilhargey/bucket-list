@@ -36,6 +36,10 @@ const UserSchema = new Schema({
       sparse: true,
       unique: true
     }
+  },
+  likes: {
+    type: [Schema.Types.ObjectId],
+    default: []
   }
 });
 
