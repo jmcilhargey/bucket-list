@@ -63,6 +63,11 @@ class Box extends React.Component {
   }
 }
 
+Box.propTypes = {
+  onHideBox: React.PropTypes.element.func,
+  previewUrl: React.PropTypes.element.func
+};
+
 const LightBox = reduxForm({
   form: "addPin",
   validate

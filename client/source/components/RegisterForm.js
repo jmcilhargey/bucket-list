@@ -56,6 +56,10 @@ class Form extends React.Component {
   }
 }
 
+Form.propTypes = {
+  onClick: React.PropTypes.element.func
+};
+
 const RegisterForm = reduxForm({
   form: "register",
   validate

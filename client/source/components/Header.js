@@ -30,4 +30,10 @@ class Header extends React.Component {
   }
 }
 
+Header.propTypes = {
+  isLogin: React.PropTypes.bool,
+  onShowBox: React.PropTypes.func,
+  onLogout: React.PropTypes.func
+};
+
 export default Header
