@@ -5,8 +5,6 @@ const mid = require("../middleware");
 const Users = require("../models/users");
 const Pins = require("../models/pins");
 
-require("../../env");
-
 module.exports = (router, passport) => {
 
   router.get("/pins", (req, res, next) => {
