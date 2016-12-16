@@ -94,7 +94,7 @@ svg {
   color: #01579b;
 }
 
-.header-selection a:first-child {
+.header-selection > a:first-child {
   border-left: 1px solid #e0e0e0;
 }
 
@@ -106,7 +106,7 @@ svg {
 /* Home View */
 
 .home-container {
-  max-width: 64em;
+  max-width: 72em;
   margin: 1em auto 2em auto;
   display: flex;
   display: -webkit-flex;
@@ -119,7 +119,7 @@ svg {
 .pin-card {
   padding: 0 1em;
   margin: 1em 0;
-  width: calc(33% - 1em);
+  width: calc(25% - 1em);
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
@@ -131,6 +131,24 @@ svg {
   justify-content: space-between;
 }
 
+@media screen and (max-width: 64em) {
+  .pin-card {
+    width: calc(33% - 1em);
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .pin-card {
+    width: calc(50% - 1em);
+  }
+}
+
+@media screen and (max-width: 36em) {
+  .pin-card {
+    width: calc(100% - 1em);
+  }
+}
+
 .pin-card:hover {
   color: #01579b;
   border-color: #01579b;
@@ -138,7 +156,7 @@ svg {
 
 .pin-card > img {
   max-width: 100%;
-  max-height: 20em;
+  max-height: 15em;
   margin: 0 auto;
 }
 
@@ -159,6 +177,52 @@ svg {
   right: 3px;
 }
 
+/* Pin Detail Overlay */
+
+.pin-detail-box {
+  padding: 1em;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  align-items: start;
+  -webkit-align-items: start;
+  position: fixed;
+  top: 2em;
+  left: calc(50% - 15em);
+  width: 30em;
+  height: 30em;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  z-index: 15;
+}
+
+.pin-detail-box > p {
+  margin: 0.5em 0;
+}
+
+.pin-detail-like svg {
+  cursor: pointer;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  width: 40px;
+  height: 40px;
+  fill: #f50057;
+  opacity: 0.5;
+  transition: all 0.3s linear;
+}
+
+.pin-detail-like svg:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+}
+
+.pin-detail-image {
+    max-height: 15em;
+}
+
 /* New Pin Overlay */
 
 .overlay {
@@ -177,18 +241,46 @@ svg {
   padding: 1em;
   display: flex;
   display: -webkit-flex;
-  flex-direction: column;
-  -webkit-flex-direction: column;
-  align-items: center;
-  -webkit-align-items: center;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  align-items: start;
+  -webkit-align-items: start;
   position: fixed;
   top: 2em;
-  left: calc(50% - 13em);
-  width: 26em;
-  height: 44em;
+  left: calc(50% - 20em);
+  width: 40em;
+  height: 30em;
   background-color: white;
   border: 1px solid #e0e0e0;
   z-index: 15;
+}
+
+.img-preview {
+  margin: 2em 2em 0 0;
+  width: 20em;
+  height: 18em;
+  border: 1px solid #cccccc;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+@media screen and (max-width: 42em) {
+  .light-box {
+    align-items: center;
+    -webkit-align-items: center;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    width: calc(100% - 2.5em);
+    height: 46em;
+    left: 1em;
+  }
+  .img-preview {
+    margin: 0;
+  }
 }
 
 .close-box {
@@ -198,17 +290,8 @@ svg {
   cursor: pointer;
 }
 
-.img-preview {
-  margin-top: 1em;
-  width: 20em;
-  height: 12em;
-  border: 1px solid #e0e0e0;
-  display: flex;
-  display: -webkit-flex;
-  justify-content: center;
-  -webkit-justify-content: center;
-  align-items: center;
-  -webkit-align-items: center;
+.close-box svg {
+  fill: #cccccc;
 }
 
 .img-preview > img {
@@ -406,4 +489,79 @@ svg {
 .login-error {
   margin: 0;
   color: #ef5350;
+}
+
+/* Messaging Components */
+
+.close-message-box,
+.close-error-box {
+  position: absolute;
+  top: 1.8em;
+  left: 0.75em;
+}
+
+.close-message-box svg {
+  width: 12px;
+  fill: #00e676;
+}
+
+.close-error-box svg {
+  width: 12px;
+  fill: #f44336;
+}
+
+.success-message {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity 0.5s ease-out;
+}
+
+.success-message > p {
+  padding: 0.75em 1em 0.75em 2em;
+  border: 1px solid #00e676;
+  color: #00e676;
+}
+
+.error-message {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity 0.5s ease-out;
+}
+
+.error-message > p {
+  padding: 0.75em 1em 0.75em 2em;
+  border: 1px solid #f44336;
+  color: #f44336;
+}
+
+.message-enter,
+.error-enter {
+  opacity: 0;
+}
+
+.message-enter.message-enter-active,
+.error-enter.message-error-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.message-leave,
+.error-leave {
+  opacity: 1;
+}
+
+.message-leave.message-leave-active,
+.error-leave.error-leave-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
 }
