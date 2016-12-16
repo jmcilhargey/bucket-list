@@ -35,19 +35,68 @@ module.exports = (router, passport) => {
       "title": pin.title,
       "address": pin.address,
       "event": pin.event
-    }
+    };
 
     Pins.create(newPin, (error, pin) => {
       if (error) {
         return next(error);
       }
       Pins.find({}, (error, pins) => {
-        res.status(200).json({ data: pins, message: "Success, your pin has been posted!" });
+        res.status(200).json({ data: pins, message: "Success, your pin has been posted" });
       });
     });
   });
 
-  router.post("/register", (req, res, next) => {
+  router.put("/likes", mid.loggedIn, (req, res, next) => {
+
+    const pinId = req.body.id;
+    Users.findById(req.decoded.id, (error, user) => {
+      const index = user.likes.indexOf(pinId);
+
+      if (index !== -1) {
+        user.likes = user.likes.filter((value) => value.toString() !== pinId);
+        user.save((error, user) => {
+          if (error) {
+            return next(error);
+          }
+          Pins.findByIdAndUpdate(pinId, { $inc: { likes: -1 } }, { new: true }, (error, pin) => {
+            if (error) {
+              return next(error);
+            }
+            res.status(200).json({ data: pin, message: "Pin unliked" });
+          });
+        });
+
+      } else {
+        user.likes.push(pinId);
+        user.save((error, user) => {
+          if (error) {
+            return next(error);
+          }
+          Pins.findByIdAndUpdate(pinId, { $inc: { likes: 1 } }, { new: true }, (error, pin) => {
+            if (error) {
+              return next(error);
+            }
+            res.status(200).json({ data: pin, message: "Pin liked" });
+          });
+        });
+      }
+    });
+  });
+
+  router.put("/views", (req, res, next) => {
+
+    const pinId = req.body.id;
+
+    Pins.findByIdAndUpdate(pinId, { $inc: { views: 1 } }, { new: true }, (error, pin) => {
+      if (error) {
+        return next(error);
+      }
+      res.status(200).json({ data: pin });
+    });
+  });
+
+  router.post("/register", mid.loggedOut, (req, res, next) => {
 
     const user = req.body;
 
@@ -74,11 +123,11 @@ module.exports = (router, passport) => {
       if (error) {
         return next(error);
       }
-      res.status(200).json({ message: "Success, welcome to BucketList!" });
+      res.status(200).json({ message: `Success, welcome to BucketList ${ user.local.username }` });
     });
   });
 
-  router.get("/login", (req, res, next) => {
+  router.get("/login", mid.loggedOut, (req, res, next) => {
 
     const encoded = req.headers["authorization"].split(" ")[1];
     const decoded = new Buffer(encoded, "base64").toString("utf8").split(":");
@@ -87,11 +136,12 @@ module.exports = (router, passport) => {
       if (error || !user) {
         res.json({ error: "Invalid username or password" })
       } else {
+
         jwt.sign({ username: user.local.username, id: user._id }, process.env.JWT_SECRET, { algorithm: "HS256", expiresIn: "1d"}, (error, token) => {
           if (error) {
             return next(error);
           }
-          res.status(200).json({ token: token });
+          res.status(200).json({ token: token, message: `Hi ${ user.local.username }, you're logged in` });
         });
       }
     });
@@ -102,7 +152,7 @@ module.exports = (router, passport) => {
     if (req.decoded) {
       req.decoded = null;
     }
-    res.status(301).send({ message: "Logged out from system" });
+    res.status(200).json({ message: "You've logged out of BucketList" });
   });
 
   router.get("/facebook", passport.authenticate("facebook"));
@@ -113,11 +163,12 @@ module.exports = (router, passport) => {
       if (error) {
         return next(error);
       }
-      res.status(200).json({ token: token });
+      res.status(200).json({ token: token, message: `Hi ${ req.user.facebook.username }, you're logged in with Facebook` });
     });
   });
 
-  router.post("/search", (req, res, next) => {
+  router.post("/search/:value", (req, res, next) => {
+    const search = req.params.value;
 
   });
 }
