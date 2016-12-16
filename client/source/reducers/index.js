@@ -28,18 +28,39 @@ const newPinBox = (state = {
   }
 }
 
+const pinDetailBox = (state = {
+  isDetail: false,
+  selected: null
+}, action) => {
+
+  switch(action.type) {
+    case "SHOW_PIN_DETAIL":
+      return Object.assign({}, state, { isDetail: true, selected: action.selected });
+      break;
+    case "HIDE_PIN_DETAIL":
+      return Object.assign({}, state, { isDetail: false, selected: null });
+      break;
+    default:
+      return state;
+  }
+};
+
 const pinsView = (state = {
   isFetching: false,
   pinData: null,
   receivedAt: null
 }, action) => {
-
   switch(action.type) {
     case "REQUEST_PINS":
       return Object.assign({}, state, { isFetching: true });
       break;
     case "RECEIVE_PINS":
       return Object.assign({}, state, { isFetching: false, pinData: action.data, receivedAt: action.receivedAt });
+      break;
+    case "UPDATE_PIN":
+      const updatedPin = action.data;
+      const newPins = state.pinData.map((pin) => pin._id !== updatedPin._id ? pin : updatedPin);
+      return Object.assign({}, state, { isFetching: false, pinData: newPins, receivedAt: action.receivedAt });
       break;
     default:
       return state;
@@ -95,10 +116,7 @@ const messageInfo = (state = {
       return Object.assign({}, state, { errorMessage: action.error });
       break;
     case "CLEAR_MESSAGE":
-      return Object.assign({}, state, { validMessage: null });
-      break;
-    case "CLEAR_ERROR":
-      return Object.assign({}, state, { errorMessage: null });
+      return Object.assign({}, state, { validMessage: null, errorMessage: null });
       break;
     default:
       return state;
@@ -107,6 +125,7 @@ const messageInfo = (state = {
 
 const rootReducer = combineReducers({
   newPinBox,
+  pinDetailBox,
   pinsView,
   registerUser,
   loginUser,
